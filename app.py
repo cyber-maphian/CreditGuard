@@ -33,7 +33,10 @@ with default:
 
             
             if submit:
-                if int(age) >= 18:
+                if late == 0 and application == 0 and previous == 0:
+                    output = 50
+                    st.subheader(f"Default Rate: :green[{output}%]")
+                else: 
                     date_string = str(dayofmonth)
                     date_object =datetime.strptime(date_string,"%Y-%m-%d")
                     day_of_the_month = date_object.day
@@ -79,8 +82,7 @@ with default:
                         else:
                             output = float(prediction)
                             st.subheader(f"Default Rate: :red[{output}%]")
-                else:
-                        st.error("Error occured 'age must be greater then or equal to 18'",icon="🚨")                
+                       
     except:
         st.error("Error occured 'either an empty field or string value'",icon="🚨")      
 
@@ -117,7 +119,12 @@ with credit_worthiness:
                 date_object =datetime.strptime(date_string,"%Y-%m-%d")
                 day_of_the_month = date_object.day
                 dayofmonth = day_of_the_month
-                if int(age) >= 18:
+                
+                if late == 0 and application == 0 and previous == 0:
+                    output = 50
+                    st.subheader(f"Default Rate: :green[{output}%]")
+                
+                else:
                     map_occupation = {"Student":0,"Small business/artisan":1,"Employed":2}
                     occupation = map_occupation[occupation]
                     map_month = {'1 month':1,'2 months':2,'3 months':3}
@@ -134,11 +141,8 @@ with credit_worthiness:
 
                     else:
                         st.subheader(f"Credit Worthy: :red[{credit_score}]")
-
-
+          
                 
-                else:
-                    st.error("Error occured 'age must be greater then or equal to 18'",icon="🚨")
     except:
             st.error("Error occured 'either an empty field or string value'",icon="🚨")
 with amount_:
