@@ -150,7 +150,8 @@ with amount_:
             occupation = st.selectbox("Applicant's Occupation",options=["Student","Small business/artisan","Employed"])
             previous = st.slider("On a scale of (0-100), have this applicant defaulted before.",min_value=0,max_value=100,value=50)
             application = st.slider("On a scale of (0-100), how frequently does this applicant request for loan.",min_value=0,max_value=100,value=50)
-            interest = st.number_input("Interest rate.",min_value=20,max_value=60)
+            interest = st.number_input("Interest rate.",min_value=20,max_value=60,disabled=True)
+            days_ = st.selectbox("How long do you plan to hold the money for", options=["15 Days","30 Days"])
             payday = st.selectbox("Pay back day (0: first 15 days of the month, 1: otherwise.)",[0,1])
             dayofmonth = st.date_input("day of the month",disabled=True)#number_input("Day of the month",min_value=0,max_value=31)
             submit = st.form_submit_button("Analyze",icon="⚔️")
@@ -160,6 +161,10 @@ with amount_:
                 date_object =datetime.strptime(date_string,"%Y-%m-%d")
                 day_of_the_month = date_object.day
                 dayofmonth = day_of_the_month
+                #DAY OF HOLDING
+                maped = {"15 Days":15,"30 Days":30}
+                days_ = maped[days_]
+                #days of holding.
                 if int(age) >= 18:
                     map_occupation = {"Student":0,"Small business/artisan":1,"Employed":2}
                     occupation = map_occupation[occupation]
@@ -170,18 +175,68 @@ with amount_:
                     prediction = int(prediction)
                 #optimization and thresh hold technique
                     if occupation == 0 and prediction >20000:
-                          st.subheader(f"Amount: :green[N20000]")
+                          if days_ == 30:
+                            money = 20000
+                            repay = (20000 * 0.2) + money
+                            st.subheader(f"Amount: :green[N{money}]")
+                            st.subheader(f"Repayment: :green[N{repay}]")
+                          else:
+                                money = 20000
+                                repay = (20000 * 0.1) + money
+                                st.subheader(f"Amount: :green[N{money}]")
+                                st.subheader(f"Repayment: :green[N{repay}]")
+                                  
                     elif  "-" in str(prediction):
                          st.subheader(f"Amount: :green[N0]")  
+                         
                     elif occupation == 1:
                          if previous <=20 and application >=60:
-                                st.subheader(f"Amount: :green[N150000]")
+                                if days_ == 30:
+                                    money = 150000
+                                    repay = (150000 * 0.2) + money
+                                    st.subheader(f"Amount: :green[N{money}]")
+                                    st.subheader(f"Repayment: :green[N{repay}]")
+                                else:
+                                     money = 20000
+                                     repay = (20000 * 0.1) + money
+                                     st.subheader(f"Amount: :green[N{money}]")
+                                     st.subheader(f"Repayment: :green[N{repay}]")    
+
                          elif previous <=30 and application >=50:
-                                st.subheader(f"Amount: :green[N100000]")
+                                if days_ == 30:
+                                    money = 100000
+                                    repay = (100000 * 0.2) + money
+                                    st.subheader(f"Amount: :green[N100000]")
+                                    st.subheader(f"Repayment: :green[N{repay}]")
+                                else:
+                                     money = 100000
+                                     repay = (100000 * 0.1) + money
+                                     st.subheader(f"Amount: :green[N100000]")
+                                     st.subheader(f"Repayment: :green[N{repay}]") 
+
                          else:
-                                st.subheader(f"Amount: :green[N{prediction}]")                                
-                    else:   
-                        st.subheader(f"Amount: :green[N{prediction}]")
+                                if days_ == 30: 
+                                    prediction = prediction
+                                    repay = (prediction * 0.2) + prediction
+                                    st.subheader(f"Amount: :green[N{prediction}]")
+                                    st.subheader(f"Repayment: :green[N{repay}]")   
+                                else:
+                                     prediction = prediction
+                                     repay = (prediction * 0.1) + prediction
+                                     st.subheader(f"Amount: :green[N{prediction}]")
+                                     st.subheader(f"Repayment: :green[N{repay}]") 
+                                                                      
+                    else:
+                        if days_ == 30:   
+                            prediction = prediction
+                            repay = (prediction * 0.2) + prediction
+                            st.subheader(f"Amount: :green[N{prediction}]")
+                            st.subheader(f"Repayment: :green[N{repay}]")
+                        else:   
+                            prediction = prediction
+                            repay = (prediction * 0.1) + prediction
+                            st.subheader(f"Amount: :green[N{prediction}]")
+                            st.subheader(f"Repayment: :green[N{repay}]")         
 
 
 
