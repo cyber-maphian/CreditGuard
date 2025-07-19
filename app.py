@@ -151,7 +151,7 @@ with amount_:
             previous = st.slider("On a scale of (0-100), have this applicant defaulted before.",min_value=0,max_value=100,value=50)
             application = st.slider("On a scale of (0-100), how frequently does this applicant request for loan.",min_value=0,max_value=100,value=50)
             interest = st.number_input("Interest rate.",min_value=20,max_value=60,disabled=True)
-            days_ = st.selectbox("How long do you plan to hold the money for", options=["15 Days","30 Days"])
+            days_ = st.selectbox("How long do you plan to hold the money for", options=["30 Days","15 Days"])
             payday = st.selectbox("Pay back day (0: first 15 days of the month, 1: otherwise.)",[0,1])
             dayofmonth = st.date_input("day of the month",disabled=True)#number_input("Day of the month",min_value=0,max_value=31)
             submit = st.form_submit_button("Analyze",icon="⚔️")
@@ -162,7 +162,7 @@ with amount_:
                 day_of_the_month = date_object.day
                 dayofmonth = day_of_the_month
                 #DAY OF HOLDING
-                maped = {"15 Days":15,"30 Days":30}
+                maped = {"30 Days":30,"15 Days":15}
                 days_ = maped[days_]
                 #days of holding.
                 if int(age) >= 18:
@@ -197,8 +197,8 @@ with amount_:
                                     st.subheader(f"Amount: :green[N{money}]")
                                     st.subheader(f"Repayment: :green[N{repay}]")
                                 else:
-                                     money = 20000
-                                     repay = (20000 * 0.1) + money
+                                     money = 150000
+                                     repay = (150000 * 0.1) + money
                                      st.subheader(f"Amount: :green[N{money}]")
                                      st.subheader(f"Repayment: :green[N{repay}]")    
 
